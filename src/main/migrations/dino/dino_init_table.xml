@@ -1,0 +1,39 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="dino_init"
+               author="r.ofatenko"
+               logicalFilePath="dino/dino_init_table.xml">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="dinosaur" schemaName="public"/>
+            </not>
+        </preConditions>
+
+        <sql splitStatements="false">
+            create table if not exists dinosaur
+            (
+            id integer not null
+            constraint dinosaur_pkey
+            primary key,
+            weight double precision not null,
+            height double precision not null,
+            gender boolean not null,
+            "isFly" boolean not null,
+            "isSwim" boolean not null,
+            "typeOfFood" varchar not null,
+            lifespan integer
+            );
+
+            alter table dinosaur owner to postgres;
+        </sql>
+
+        <rollback>
+        </rollback>
+    </changeSet>
+
+
+</databaseChangeLog>
